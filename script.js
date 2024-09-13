@@ -82,3 +82,16 @@ function loadMemoryShelf() {
 
 // Load the memory shelf on page load
 window.onload = loadMemoryShelf;
+// Function to create mood balls for the memory shelf
+const createMemoryBall = (color) => {
+    const ball = document.createElement('div');
+    ball.classList.add('memory-ball');
+    ball.style.backgroundColor = color;
+    memoryShelf.appendChild(ball);
+};
+
+// Show the mood tracker when 'Log Mood' is clicked
+logButton.addEventListener('click', () => {
+    startScreen.classList.add('hidden');
+    moodTracker.classList.remove('hidden');
+});
