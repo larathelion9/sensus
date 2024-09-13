@@ -3,59 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sensus mood tracker</title>
+    <title>sensus - mood tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="start-screen" id="start-screen">
-        <h1>sensus</h1>
-        <p class="quote">"your mood matters. track it daily."</p>
-        <button class="start-button" onclick="showMoodTracker()">log mood</button>
-    </div>
-
-    <div class="container hidden" id="mood-tracker">
-        <h1>sensus</h1>
-        <p>how have you felt today?</p>
-        <div class="mood-options">
-            <button class="mood-button" onclick="logMood('happy')">😊 happy</button>
-            <button class="mood-button" onclick="logMood('sad')">😢 sad</button>
-            <button class="mood-button" onclick="logMood('neutral')">😐 neutral</button>
-            <button class="mood-button" onclick="logMood('angry')">😡 angry</button>
-            <button class="mood-button" onclick="logMood('excited')">😆 excited</button>
-            <button class="mood-button" onclick="logMood('anxious')">😰 anxious</button>
-            <button class="mood-button" onclick="logMood('tired')">😴 tired</button>
-        </div>
-        <div class="shelf">
-            <div class="memory-shelf" id="memory-shelf"></div>
-        </div>
-        <p id="feedback"></p>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensus Mood Tracker</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <!-- Starting Screen -->
     <div class="start-screen">
-        <h1>Welcome to Sensus</h1>
-        <p>"Your mood is just a moment in time, not the whole story."</p>
-        <button class="start-button">Log Mood</button>
+        <h1>sensus</h1>
+        <p>"feelings are just visitors, let them come and go."</p>
+        <button class="start-button">log mood</button>
+        <!-- Light/Dark Mode Toggle -->
+        <button class="toggle-mode light-mode-button">switch to dark mode</button>
     </div>
+
+    <!-- Mood Tracker, initially hidden -->
     <div class="mood-tracker hidden">
         <div class="mood-options">
-            <!-- Mood buttons here -->
+            <button class="mood-button" data-color="#ff9999">happy</button>
+            <button class="mood-button" data-color="#66b3ff">sad</button>
+            <button class="mood-button" data-color="#99ff99">neutral</button>
+            <button class="mood-button" data-color="#ffcc99">angry</button>
+            <button class="mood-button" data-color="#ff9966">excited</button>
+            <button class="mood-button" data-color="#99ccff">anxious</button>
         </div>
-        <div class="memory-shelf shelf">
-            <!-- Mood balls here -->
+        <!-- Log Emotion Button -->
+        <button class="log-emotion">log emotion</button>
+        <!-- Memory Shelf -->
+        <div class="memory-shelf-container">
+            <div class="memory-shelf-row"></div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
