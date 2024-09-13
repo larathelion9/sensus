@@ -1,118 +1,58 @@
-// Function to show the mood tracker and hide the start screen
-function showMoodTracker() {
-    document.getElementById('start-screen').style.display = 'none';
-    document.getElementById('mood-tracker').style.display = 'block';
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const startScreen = document.querySelector('.start-screen');
+    const moodTracker = document.querySelector('.mood-tracker');
+    const logMoodButton = document.querySelector('.start-button');
+    const modeToggleButton = document.querySelector('.toggle-mode');
+    const body = document.querySelector('body');
+    const moodButtons = document.querySelectorAll('.mood-button');
+    const logEmotionButton = document.querySelector('.log-emotion');
+    const memoryShelfRow = document.querySelector('.memory-shelf-row');
 
-// Function to log the selected mood
-function logMood(mood) {
-    const memoryShelf = document.getElementById('memory-shelf');
-    const feedback = document.getElementById('feedback');
+    let currentMode = 'light';
 
-    // Get current date
-    const today = new Date().toLocaleDateString();
-    
-    // Check if today's mood has been logged
-    if (localStorage.getItem(today)) {
-        feedback.textContent = "you've already logged your mood today!";
-        return;
-    }
-
-    // Save today's mood in localStorage
-    localStorage.setItem(today, mood);
-
-    // Add a new ball to the memory shelf with the mood color
-    const newBall = document.createElement('div');
-    newBall.classList.add('memory-ball');
-    
-    // Assign color based on mood
-    if (mood === 'happy') {
-        newBall.style.backgroundColor = '#f1c40f'; // yellow for happy
-        feedback.textContent = "you felt happy today!";
-    } else if (mood === 'sad') {
-        newBall.style.backgroundColor = '#3498db'; // blue for sad
-        feedback.textContent = "you felt sad today!";
-    } else if (mood === 'neutral') {
-        newBall.style.backgroundColor = '#95a5a6'; // grey for neutral
-        feedback.textContent = "you felt neutral today.";
-    } else if (mood === 'angry') {
-        newBall.style.backgroundColor = '#e74c3c'; // red for angry
-        feedback.textContent = "you felt angry today!";
-    } else if (mood === 'excited') {
-        newBall.style.backgroundColor = '#2ecc71'; // green for excited
-        feedback.textContent = "you felt excited today!";
-    } else if (mood === 'anxious') {
-        newBall.style.backgroundColor = '#e67e22'; // orange for anxious
-        feedback.textContent = "you felt anxious today.";
-    } else if (mood === 'tired') {
-        newBall.style.backgroundColor = '#8e44ad'; // purple for tired
-        feedback.textContent = "you felt tired today.";
-    }
-
-    // Add the new ball to the memory shelf
-    memoryShelf.appendChild(newBall);
-
-    // Load previous days' moods
-    loadMemoryShelf();
-}
-
-// Function to load memory shelf
-function loadMemoryShelf() {
-    const memoryShelf = document.getElementById('memory-shelf');
-    memoryShelf.innerHTML = ''; // Clear the shelf
-
-    for (let i = 0; i < localStorage.length; i++) {
-        const date = localStorage.key(i);
-        const mood = localStorage.getItem(date);
-
-        const ball = document.createElement('div');
-        ball.classList.add('memory-ball');
-
-        if (mood === 'happy') ball.style.backgroundColor = '#f1c40f';
-        if (mood === 'sad') ball.style.backgroundColor = '#3498db';
-        if (mood === 'neutral') ball.style.backgroundColor = '#95a5a6';
-        if (mood === 'angry') ball.style.backgroundColor = '#e74c3c';
-        if (mood === 'excited') ball.style.backgroundColor = '#2ecc71';
-        if (mood === 'anxious') ball.style.backgroundColor = '#e67e22';
-        if (mood === 'tired') ball.style.backgroundColor = '#8e44ad';
-
-        memoryShelf.appendChild(ball);
-    }
-}
-
-// Load the memory shelf on page load
-window.onload = loadMemoryShelf;
-// Function to create mood balls for the memory shelf
-const createMemoryBall = (color) => {
-    const ball = document.createElement('div');
-    ball.classList.add('memory-ball');
-    ball.style.backgroundColor = color;
-    memoryShelf.appendChild(ball);
-};
-
-// Show the mood tracker when 'Log Mood' is clicked
-logButton.addEventListener('click', () => {
-    startScreen.classList.add('hidden');
-    moodTracker.classList.remove('hidden');
-});
-// Function to create mood balls for the memory shelf
-const createMemoryBall = (color) => {
-    const ball = document.createElement('div');
-    ball.classList.add('memory-ball');
-    ball.style.backgroundColor = color;
-    memoryShelf.appendChild(ball);
-    ball.addEventListener('animationend', () => {
-        // Optionally, do something after animation ends
+    // Toggle Light/Dark Mode
+    modeToggleButton.addEventListener('click', () => {
+        if (currentMode === 'light') {
+            body.classList.add('dark-mode-body');
+            startScreen.classList.add('dark-mode');
+            modeToggleButton.textContent = 'switch to light mode';
+            modeToggleButton.classList.replace('light-mode-button', 'dark-mode-button');
+            currentMode = 'dark';
+        } else {
+            body.classList.remove('dark-mode-body');
+            startScreen.classList.remove('dark-mode');
+            modeToggleButton.textContent = 'switch to dark mode';
+            modeToggleButton.classList.replace('dark-mode-button', 'light-mode-button');
+            currentMode = 'light';
+        }
     });
-};
 
-// Show the mood tracker when 'Log Mood' is clicked
-logButton.addEventListener('click', () => {
-    startScreen.classList.add('hidden');
-    moodTracker.classList.remove('hidden');
+    // Show Mood Tracker
+    logMoodButton.addEventListener('click', () => {
+        startScreen.classList.add('hidden');
+        moodTracker.classList.remove('hidden');
+    });
+
+    // Log Emotion and Add Memory Ball
+    logEmotionButton.addEventListener('click', () => {
+        const selectedMoodButton = document.querySelector('.mood-button.selected');
+        if (selectedMoodButton) {
+            const moodColor = selectedMoodButton.getAttribute('data-color');
+            const memoryBall = document.createElement('div');
+            memoryBall.className = 'memory-ball';
+            memoryBall.style.backgroundColor = moodColor;
+            memoryBall.innerHTML = `
+                <div class="ball-details">Date: ${new Date().toLocaleDateString()}</div>
+            `;
+            memoryShelfRow.appendChild(memoryBall);
+        }
+    });
+
+    // Select Mood
+    moodButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            moodButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        });
+    });
 });
-
-// Ensure mood balls are created with animations
-const addMoodToShelf = (color) => {
-    createMemoryBall(color);
-};
