@@ -95,3 +95,24 @@ logButton.addEventListener('click', () => {
     startScreen.classList.add('hidden');
     moodTracker.classList.remove('hidden');
 });
+// Function to create mood balls for the memory shelf
+const createMemoryBall = (color) => {
+    const ball = document.createElement('div');
+    ball.classList.add('memory-ball');
+    ball.style.backgroundColor = color;
+    memoryShelf.appendChild(ball);
+    ball.addEventListener('animationend', () => {
+        // Optionally, do something after animation ends
+    });
+};
+
+// Show the mood tracker when 'Log Mood' is clicked
+logButton.addEventListener('click', () => {
+    startScreen.classList.add('hidden');
+    moodTracker.classList.remove('hidden');
+});
+
+// Ensure mood balls are created with animations
+const addMoodToShelf = (color) => {
+    createMemoryBall(color);
+};
