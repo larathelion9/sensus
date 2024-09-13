@@ -1,65 +1,37 @@
 /* General Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9; /* soft neutral background */
+    background-color: #f4f4f9;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    animation: fadeIn 1s ease-in; /* Fade in for the entire app */
 }
 
 /* Start Screen */
 .start-screen {
     text-align: center;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 350px;
+    opacity: 0;
+    animation: fadeInStartScreen 2s ease-in forwards; /* Fade-in animation for start screen */
 }
 
-h1 {
-    font-size: 32px;
-    color: #333;
-    margin-bottom: 10px;
+/* Button hover effect */
+.start-button, .mood-button {
+    transition: transform 0.2s ease;
 }
 
-.quote {
-    font-size: 16px;
-    color: #777;
-    margin-bottom: 20px;
-}
-
-.start-button {
-    background-color: #222831; /* deep charcoal */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px; /* changed from oval to rectangle with rounded corners */
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s ease;
-}
-
-.start-button:hover {
-    background-color: #393e46;
+.start-button:hover, .mood-button:hover {
+    transform: scale(1.1); /* Slight scale-up effect on hover */
 }
 
 /* Mood Tracker */
-.hidden {
-    display: none;
-}
-
-.container {
-    text-align: center;
-    padding: 20px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 350px;
-}
-
 .mood-options {
     display: flex;
     flex-wrap: wrap;
@@ -68,19 +40,24 @@ h1 {
 }
 
 .mood-button {
-    background-color: #30475e; /* dark slate */
-    color: white;
+    background-color: #dcdde1;
+    color: #333333;
     border: none;
-    padding: 12px 20px; /* adjusted padding for more rectangular look */
-    border-radius: 8px;
+    padding: 10px 14px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 18px;
     margin: 8px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .mood-button:hover {
-    background-color: #3a4750;
+    background-color: #bfc0c4;
+    transform: scale(1.1); /* Hover effect for mood buttons */
+}
+
+.mood-button:active {
+    animation: pulse 0.4s ease; /* Pulse effect when a mood is clicked */
 }
 
 /* Memory Shelf */
@@ -94,21 +71,58 @@ h1 {
     justify-content: center;
     align-items: center;
     min-height: 50px;
+    position: relative;
 }
 
 .memory-ball {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     margin: 0 5px;
-    animation: grow 0.6s ease-in-out;
+    animation: drop 0.6s ease-in-out; /* Bouncy drop effect */
 }
 
-@keyframes grow {
+/* Keyframes for animations */
+@keyframes fadeIn {
     0% {
-        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInStartScreen {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
     }
     100% {
         transform: scale(1);
+    }
+}
+
+@keyframes drop {
+    0% {
+        transform: translateY(-50px) scale(0.5);
+    }
+    50% {
+        transform: translateY(10px) scale(1.1);
+    }
+    100% {
+        transform: translateY(0) scale(1);
     }
 }
