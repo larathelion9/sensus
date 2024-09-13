@@ -278,3 +278,167 @@ body {
         transform: scale(1);
     }
 }
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    animation: fadeIn 1s ease-in; /* Fade in for the entire app */
+}
+
+/* Start Screen */
+.start-screen {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    opacity: 0;
+    animation: fadeInStartScreen 2s ease-in forwards; /* Fade-in animation for start screen */
+}
+
+/* Button styling */
+.start-button, .mood-button {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.start-button:hover, .mood-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.1); /* Slight scale-up effect on hover */
+}
+
+/* Mood Tracker */
+.mood-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.mood-button {
+    background-color: #dcdde1;
+    color: #333333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.mood-button:hover {
+    background-color: #bfc0c4;
+    transform: scale(1.1); /* Hover effect for mood buttons */
+}
+
+.mood-button:active {
+    animation: pulse 0.4s ease; /* Pulse effect when a mood is clicked */
+}
+
+/* Memory Shelf */
+.shelf {
+    margin-top: 20px;
+    padding: 10px;
+    animation: fadeInShelf 1s ease-in; /* Fade-in animation for the shelf */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items in the shelf */
+}
+
+.memory-shelf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    position: relative;
+}
+
+.memory-ball {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 5px;
+    background-color: #dcdde1;
+    animation: drop 0.6s ease-in-out, fadeInBall 0.5s ease; /* Ball drop and fade-in effect */
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInStartScreen {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes drop {
+    0% {
+        transform: translateY(-50px) scale(0.5);
+    }
+    50% {
+        transform: translateY(10px) scale(1.1);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeInShelf {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInBall {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
