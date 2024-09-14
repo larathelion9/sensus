@@ -2,57 +2,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const startScreen = document.querySelector('.start-screen');
     const moodTracker = document.querySelector('.mood-tracker');
     const logMoodButton = document.querySelector('.start-button');
-    const lever = document.querySelector('.lever');
+    const modeToggleButton = document.querySelector('.toggle-mode');
+    const body = document.querySelector('body');
     const moodButtons = document.querySelectorAll('.mood-button');
+    const lockMoodButton = document.querySelector('.lock-mood');
     const memoryShelfRow = document.querySelector('.memory-shelf-row');
-    const instructions = document.querySelector('.instructions');
-    
-    let selectedMood = null;
-    let moodLogged = false;
+    let selectedEmotion = null;
 
     // Show Mood Tracker on Log Mood Button Click
     logMoodButton.addEventListener('click', () => {
         startScreen.classList.add('hidden');
         moodTracker.classList.remove('hidden');
-        logMoodButton.style.display = 'none';  // Hide log mood button
+    });
+
+    // Toggle Light/Dark Mode
+    modeToggleButton.addEventListener('click', () => {
+        body.classList.toggle('dark-mode-body');
+        if (body.classList.contains('dark-mode-body')) {
+            modeToggleButton.textContent = 'switch to light mode';
+            modeToggleButton.classList.replace('light-mode-button', 'dark-mode-button');
+        } else {
+            modeToggleButton.textContent = 'switch to dark mode';
+            modeToggleButton.classList.replace('dark-mode-button', 'light-mode-button');
+        }
     });
 
     // Mood Button Click
     moodButtons.forEach(button => {
         button.addEventListener('click', () => {
-            if (!moodLogged) {
-                moodButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                selectedMood = button.dataset.emotion;
-                instructions.textContent = `You selected "${selectedMood}". Drag the lever to log it!`;
-            } else {
-                instructions.textContent = "You've already logged a mood today.";
-            }
+            // Clear previously selected emotion
+            selectedEmotion = button;
+
+            // Reset button colors
+            moodButtons.forEach(btn => btn.style.backgroundColor = '#e0e0e0');
+            // Highlight selected button color
+            button.style.backgroundColor = button.dataset.color;
         });
     });
 
-    // Lever Drag Event (Lever to lock emotion)
-    lever.addEventListener('input', (event) => {
-        if (selectedMood && lever.value == 100 && !moodLogged) {
+    // Lock Mood Button Click
+    lockMoodButton.addEventListener('click', () => {
+        if (selectedEmotion) {
+            // Create and add memory ball to the shelf
             const memoryBall = document.createElement('div');
             memoryBall.className = 'memory-ball';
-            memoryBall.style.backgroundColor = document.querySelector('.mood-button.active').dataset.color;
+            memoryBall.style.backgroundColor = selectedEmotion.dataset.color;
             const ballDetails = document.createElement('div');
             ballDetails.className = 'ball-details';
-            ballDetails.textContent = `${selectedMood} - ${new Date().toLocaleDateString()}`;
+            ballDetails.textContent = `${selectedEmotion.dataset.emotion} - ${new Date().toLocaleDateString()}`;
             memoryBall.appendChild(ballDetails);
             memoryShelfRow.appendChild(memoryBall);
 
-            instructions.textContent = "Mood logged successfully! Come back tomorrow.";
-            moodLogged = true;
-            localStorage.setItem('moodLoggedDate', new Date().toLocaleDateString());
+            // Reset the selected button after locking in
+            moodButtons.forEach(btn => btn.style.backgroundColor = '#e0e0e0');
+            selectedEmotion = null;
         }
     });
-
-    // One Log Per Day
-    const lastLoggedDate = localStorage.getItem('moodLoggedDate');
-    if (lastLoggedDate === new Date().toLocaleDateString()) {
-        moodLogged = true;
-        instructions.textContent = "You've already logged a mood today. Come back tomorrow.";
-    }
 });
