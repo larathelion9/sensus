@@ -1,17 +1,16 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const startScreen = document.querySelector('.start-screen');
-    const moodTracker = document.querySelector('.mood-tracker');
-    const logMoodButton = document.querySelector('.start-button');
-    const modeToggleButton = document.querySelector('.toggle-mode');
-    const body = document.querySelector('body');
-    const moodButtons = document.querySelectorAll('.mood-button');
-    const logEmotionButton = document.querySelector('.log-emotion');
+document.addEventListener('DOMContentLoaded', function() {
+    const logMoodButton = document.getElementById('log-mood-btn');
+    const startScreen = document.getElementById('start-screen');
+    const moodTracker = document.getElementById('mood-tracker');
     const memoryShelfRow = document.querySelector('.memory-shelf-row');
-
+    const modeToggleButton = document.getElementById('mode-toggle-btn');
+    const lever = document.getElementById('lever');
+    const moodButtons = document.querySelectorAll('.mood-button');
     let currentMode = 'light';
 
-    // Toggle Light/Dark Mode
+    // Dark/Light Mode Toggle
     modeToggleButton.addEventListener('click', () => {
+        const body = document.body;
         if (currentMode === 'light') {
             body.classList.add('dark-mode-body');
             startScreen.classList.add('dark-mode');
@@ -27,32 +26,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Show Mood Tracker
+    // Log Mood Button Action
     logMoodButton.addEventListener('click', () => {
         startScreen.classList.add('hidden');
         moodTracker.classList.remove('hidden');
     });
 
-    // Log Emotion and Add Memory Ball
-    logEmotionButton.addEventListener('click', () => {
-        const selectedMoodButton = document.querySelector('.mood-button.selected');
-        if (selectedMoodButton) {
-            const moodColor = selectedMoodButton.getAttribute('data-color');
+    // Lever Action to Lock Mood and Add to Memory Shelf
+    lever.addEventListener('click', () => {
+        const activeButton = document.querySelector('.mood-button.active');
+        if (activeButton) {
             const memoryBall = document.createElement('div');
-            memoryBall.className = 'memory-ball';
-            memoryBall.style.backgroundColor = moodColor;
-            memoryBall.innerHTML = `
-                <div class="ball-details">Date: ${new Date().toLocaleDateString()}</div>
-            `;
+            memoryBall.classList.add('memory-ball');
+            memoryBall.style.backgroundColor = activeButton.dataset.color;
+            memoryBall.innerHTML = `<div class="ball-details">${activeButton.textContent}</div>`;
             memoryShelfRow.appendChild(memoryBall);
+
+            // Clear mood selection after locking in
+            moodButtons.forEach(btn => btn.classList.remove('active'));
         }
     });
 
-    // Select Mood
+    // Handle Mood Button Selection
     moodButtons.forEach(button => {
         button.addEventListener('click', () => {
-            moodButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
+            moodButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
         });
     });
 });
