@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sensus - mood tracker</title>
+    <title>Sensus - Mood Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Starting Screen -->
-    <div class="start-screen">
-        <h1>sensus</h1>
-        <p>"feelings are just visitors, let them come and go."</p>
-        <button class="start-button">log mood</button>
-        <!-- Light/Dark Mode Toggle -->
-        <button class="toggle-mode light-mode-button">switch to dark mode</button>
+    <div id="start-screen" class="start-screen">
+        <h1 class="logo">sensus</h1>
+        <p class="quote">"emotions are the key to our memories"</p>
+        <button id="log-mood-btn" class="log-mood-btn">log mood</button>
+        <button id="mode-toggle-btn" class="light-mode-button">switch to dark mode</button>
     </div>
 
-    <!-- Mood Tracker, initially hidden -->
-    <div class="mood-tracker hidden">
-        <div class="mood-options">
-            <button class="mood-button" data-color="#ff9999" title="happy">happy</button>
-            <button class="mood-button" data-color="#66b3ff" title="sad">sad</button>
-            <button class="mood-button" data-color="#99ff99" title="neutral">neutral</button>
-            <button class="mood-button" data-color="#ffcc99" title="angry">angry</button>
-            <button class="mood-button" data-color="#ff9966" title="excited">excited</button>
-            <button class="mood-button" data-color="#99ccff" title="anxious">anxious</button>
+    <div id="mood-tracker" class="mood-tracker hidden">
+        <h2>how are you feeling today?</h2>
+        <div class="mood-buttons">
+            <button class="mood-button" data-color="#FFD700">happy</button>
+            <button class="mood-button" data-color="#1E90FF">sad</button>
+            <button class="mood-button" data-color="#FF4500">angry</button>
+            <button class="mood-button" data-color="#A9A9A9">neutral</button>
+            <button class="mood-button" data-color="#8A2BE2">anxious</button>
+            <button class="mood-button" data-color="#32CD32">calm</button>
         </div>
-        <!-- Lock Emotion Button -->
-        <button class="lock-mood">log emotion</button>
-        <!-- Memory Shelf -->
-        <div class="memory-shelf-container">
-            <div class="memory-shelf-row"></div>
+        <div class="lever-container">
+            <p>pull the lever to lock in your mood</p>
+            <div id="lever" class="lever"></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="memory-shelf" class="memory-shelf">
+        <div class="memory-shelf-row"></div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
