@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const moodButtons = document.querySelectorAll('.mood-button');
     const lockMoodButton = document.querySelector('.lock-mood');
     const memoryShelfRow = document.querySelector('.memory-shelf-row');
+    let selectedEmotion = null;
 
     // Show Mood Tracker on Log Mood Button Click
     logMoodButton.addEventListener('click', () => {
@@ -29,25 +30,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mood Button Click
     moodButtons.forEach(button => {
         button.addEventListener('click', () => {
+            // Clear previously selected emotion
+            selectedEmotion = button;
+
             // Reset button colors
             moodButtons.forEach(btn => btn.style.backgroundColor = '#e0e0e0');
-            // Set active button color
+            // Highlight selected button color
             button.style.backgroundColor = button.dataset.color;
-            
-            // Add a new memory ball
-            const memoryBall = document.createElement('div');
-            memoryBall.className = 'memory-ball';
-            memoryBall.style.backgroundColor = button.dataset.color;
-            const ballDetails = document.createElement('div');
-            ballDetails.className = 'ball-details';
-            ballDetails.textContent = `${button.dataset.emotion} - ${new Date().toLocaleDateString()}`;
-            memoryBall.appendChild(ballDetails);
-            memoryShelfRow.appendChild(memoryBall);
         });
     });
 
     // Lock Mood Button Click
     lockMoodButton.addEventListener('click', () => {
-        moodButtons.forEach(button => button.style.backgroundColor = '#e0e0e0'); // Reset all buttons
+        if (selectedEmotion) {
+            // Create and add memory ball to the shelf
+            const memoryBall = document.createElement('div');
+            memoryBall.className = 'memory-ball';
+            memoryBall.style.backgroundColor = selectedEmotion.dataset.color;
+            const ballDetails = document.createElement('div');
+            ballDetails.className = 'ball-details';
+            ballDetails.textContent = `${selectedEmotion.dataset.emotion} - ${new Date().toLocaleDateString()}`;
+            memoryBall.appendChild(ballDetails);
+            memoryShelfRow.appendChild(memoryBall);
+
+            // Reset the selected button after locking in
+            moodButtons.forEach(btn => btn.style.backgroundColor = '#e0e0e0');
+            selectedEmotion = null;
+        }
     });
 });
