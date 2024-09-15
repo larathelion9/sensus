@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const moodButtons = document.querySelectorAll('.mood-button');
     const lockMoodButton = document.querySelector('.lock-mood');
     const memoryShelfContainer = document.querySelector('.memory-shelf-container');
-
     let selectedEmotion = null;
-    let emotionCount = 0; // Counter for logged emotions
+    let memoryBallCount = 0;
 
     // Show Mood Tracker on Log Mood Button Click
     logMoodButton.addEventListener('click', () => {
@@ -32,12 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mood Button Click
     moodButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Clear previously selected emotion
             selectedEmotion = button;
-
-            // Reset button colors
             moodButtons.forEach(btn => btn.style.backgroundColor = '#e0e0e0');
-            // Highlight selected button color
             button.style.backgroundColor = button.dataset.color;
         });
     });
@@ -45,32 +40,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lock Mood Button Click
     lockMoodButton.addEventListener('click', () => {
         if (selectedEmotion) {
-            // Create and add memory ball to the shelf
-            const memoryBall = document.createElement('div');
-            memoryBall.className = 'memory-ball';
-            memoryBall.style.backgroundColor = selectedEmotion.dataset.color;
+            memoryBallCount++; // Track the number of memory balls
+            const currentRow = document.querySelector('.memory-shelf-row:last-child');
 
-            const ballDetails = document.createElement('div');
-            ballDetails.className = 'ball-details';
-            ballDetails.textContent = `${selectedEmotion.dataset.emotion} - ${new Date().toLocaleDateString()}`;
-            memoryBall.appendChild(ballDetails);
-
-            // Check if a new row is needed after 7 balls
-            if (emotionCount % 7 === 0) {
-                // Create a new row for the memory shelf
+            // Create a new row if there are already 7 memory balls in the current row
+            if (currentRow && currentRow.children.length >= 7) {
                 const newRow = document.createElement('div');
                 newRow.className = 'memory-shelf-row';
                 memoryShelfContainer.appendChild(newRow);
             }
 
-            // Add the memory ball to the current row
-            const currentRow = memoryShelfContainer.lastElementChild;
-            currentRow.appendChild(memoryBall);
+            // Create and add memory ball to the appropriate row
+            const newMemoryBall = document.createElement('div');
+            newMemoryBall.className = 'memory-ball';
+            newMemoryBall.style.backgroundColor = selectedEmotion.dataset.color;
 
-            // Increment the emotion count
-            emotionCount++;
+            const ballDetails = document.createElement('div');
+            ballDetails.className = 'ball-details';
+            ballDetails.textContent = `${selectedEmotion.dataset.emotion} - ${new Date().toLocaleDateString()}`;
+            newMemoryBall.appendChild(ballDetails);
 
-            // Reset the selected button after locking in
+            const currentRowToAdd = document.querySelector('.memory-shelf-row:last-child');
+            currentRowToAdd.appendChild(newMemoryBall);
+
+            // Reset the selected emotion
             moodButtons.forEach(btn => btn.style.backgroundColor = '#e0e0e0');
             selectedEmotion = null;
         }
