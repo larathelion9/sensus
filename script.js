@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const lockMoodButton = document.querySelector('.lock-mood');
     const memoryShelfContainer = document.querySelector('.memory-shelf-container');
     let selectedEmotion = null;
-    let emotionCount = 0;
 
     // Show Mood Tracker on Log Mood Button Click
     logMoodButton.addEventListener('click', () => {
@@ -53,18 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ball.appendChild(ballDetails);
 
-            // Add a new row for every 5 emotions
-            if (emotionCount % 5 === 0) {
-                const newRow = document.createElement('div');
-                newRow.classList.add('memory-shelf-row');
-                newRow.appendChild(ball);
-                memoryShelfContainer.appendChild(newRow);
-            } else {
-                const lastRow = memoryShelfContainer.lastElementChild;
-                lastRow.appendChild(ball);
-            }
-
-            emotionCount++;
+            memoryShelfContainer.appendChild(ball);
         } else {
             alert('Please select an emotion.');
         }
