@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.querySelector('body');
     const moodButtons = document.querySelectorAll('.mood-button');
     const lockMoodButton = document.querySelector('.lock-mood');
-    const memoryShelfRow = document.querySelector('.memory-shelf-row');
+    const memoryShelfContainer = document.querySelector('.memory-shelf-container');
+
     let selectedEmotion = null;
+    let emotionCount = 0; // Counter for logged emotions
 
     // Show Mood Tracker on Log Mood Button Click
     logMoodButton.addEventListener('click', () => {
@@ -47,11 +49,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const memoryBall = document.createElement('div');
             memoryBall.className = 'memory-ball';
             memoryBall.style.backgroundColor = selectedEmotion.dataset.color;
+
             const ballDetails = document.createElement('div');
             ballDetails.className = 'ball-details';
             ballDetails.textContent = `${selectedEmotion.dataset.emotion} - ${new Date().toLocaleDateString()}`;
             memoryBall.appendChild(ballDetails);
-            memoryShelfRow.appendChild(memoryBall);
+
+            // Check if a new row is needed after 7 balls
+            if (emotionCount % 7 === 0) {
+                // Create a new row for the memory shelf
+                const newRow = document.createElement('div');
+                newRow.className = 'memory-shelf-row';
+                memoryShelfContainer.appendChild(newRow);
+            }
+
+            // Add the memory ball to the current row
+            const currentRow = memoryShelfContainer.lastElementChild;
+            currentRow.appendChild(memoryBall);
+
+            // Increment the emotion count
+            emotionCount++;
 
             // Reset the selected button after locking in
             moodButtons.forEach(btn => btn.style.backgroundColor = '#e0e0e0');
