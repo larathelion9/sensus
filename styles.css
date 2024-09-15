@@ -135,18 +135,14 @@ body {
     transform: scale(1.05);
 }
 
-/* Memory Shelves */
+/* Memory Shelf */
 .memory-shelf-container {
-    display: flex;
-    flex-direction: column; /* Stack rows vertically */
-    gap: 10px; /* Space between rows */
-    max-height: 100%; /* Set to max if you want it to scroll */
-    overflow-y: auto; /* Enable scrolling if needed */
-}
-
-.memory-shelf-row {
-    display: flex; /* Makes sure balls are in a row */
-    gap: 10px; /* Adds space between balls */
+    display: flex; /* Align balls in a single horizontal row */
+    gap: 10px; /* Space between balls */
+    overflow-x: auto; /* Allow horizontal scrolling */
+    padding: 10px;
+    width: 100%;
+    white-space: nowrap;
 }
 
 .memory-ball {
